@@ -1,0 +1,50 @@
+let numeroSecreto = gerarNumeroAleatorio();
+let tentativas = 1;
+mensagemInicial();
+
+function exibirTextos (tag, texto) {
+    let campo = document.querySelector(tag);
+    campo.innerHTML = texto;
+}
+
+function mensagemInicial() {
+    exibirTextos('h1','Jogo do número secreto');
+    exibirTextos('p','Escolha um número entre 1 e 10'); 
+}
+
+
+function gerarNumeroAleatorio() {
+    return parseInt(Math.random() * 10 + 1);
+}
+
+function limparCampoChute() {
+    chute = document.querySelector('input');
+    chute.value = '';
+}
+
+function verificarChute() {
+    let chute = document.querySelector('input').value;
+    if(numeroSecreto == chute){
+        exibirTextos('h1','Acertou');
+        let palavraTentativas = tentativas == 1 ? 'tentativa' : 'tentativas';
+        exibirTextos('p',`Você acertou o número secreto em ${tentativas} ${palavraTentativas}`);
+        document.getElementById('reiniciar').removeAttribute('disabled');
+    } else {
+        if(numeroSecreto > chute) {
+            exibirTextos('p',`O número secreto é maior que ${chute}`);
+        } else {
+            exibirTextos('p',`O número secreto é menor que ${chute}`);
+        }
+        tentativas++;
+        limparCampoChute();
+    }
+    }  
+
+    function novoJogo() {
+        gerarNumeroAleatorio(),
+        mensagemInicial();
+        limparCampoChute();
+        tentativas = 1;
+        document.getElementById('reiniciar').setAttribute('disabled',true);
+    }
+
